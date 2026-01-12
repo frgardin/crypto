@@ -19,16 +19,22 @@ A Spring Boot application that provides AES encryption and decryption services v
 ## API Endpoints
 
 ### Encrypt
-- **GET** `/api/encrypt?text={text}`
-- Encrypts the provided text using AES and returns Base64 encoded result
+- **POST** `/api/encrypt`
+- Encrypts the provided text using AES and returns JSON with Base64 encoded result
+- **Request Body**: `{"text": "your text here"}`
+- **Response**: `{"text": "encrypted_base64_string"}`
 
 ### Decrypt
-- **GET** `/api/decrypt?text={encryptedText}`
+- **POST** `/api/decrypt`
 - Decrypts the provided Base64 encoded encrypted text
+- **Request Body**: `{"text": "encrypted text here"}`
+- **Response**: `{"text": "decrypted_original_text"}`
 
 ### Hash
-- **GET** `/api/hash?text={text}`
-- Computes SHA-256 hash of the provided text and returns hexadecimal string
+- **POST** `/api/hash`
+- Computes SHA-256 hash of the provided text and returns JSON with hexadecimal string
+- **Request Body**: `{"text": "your text here"}`
+- **Response**: `{"text": "sha256_hex_hash"}`
 
 ## Security Notes
 
@@ -45,7 +51,7 @@ A Spring Boot application that provides AES encryption and decryption services v
 ./gradlew bootRun
 ```
 
-The application will start on http://localhost:8080
+The application will start on http://localhost:8080 (configurable via `SERVER_PORT` environment variable or `server.port` property)
 
 ### Testing
 ```bash
@@ -56,17 +62,23 @@ The application will start on http://localhost:8080
 
 ### Encrypt text
 ```bash
-curl "http://localhost:8080/api/encrypt?text=Hello%20World"
+curl -X POST "http://localhost:8080/api/encrypt" \
+     -H "Content-Type: application/json" \
+     -d '{"text": "Hello World"}'
 ```
 
 ### Decrypt text
 ```bash
-curl "http://localhost:8080/api/decrypt?text=<encrypted_text>"
+curl -X POST "http://localhost:8080/api/decrypt" \
+     -H "Content-Type: application/json" \
+     -d '{"text": "encrypted_text_here"}'
 ```
 
 ### Hash text
 ```bash
-curl "http://localhost:8080/api/hash?text=Hello%20World"
+curl -X POST "http://localhost:8080/api/hash" \
+     -H "Content-Type: application/json" \
+     -d '{"text": "Hello World"}'
 ```
 
 ## Project Structure

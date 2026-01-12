@@ -6,6 +6,7 @@ import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import java.security.MessageDigest;
 import java.util.Base64;
+import java.util.HexFormat;
 
 @Service
 public class CryptoService {
@@ -16,24 +17,24 @@ public class CryptoService {
         this.key = key;
     }
 
-    public String encrypt(String text) throws Exception {
+    public CryptoDTO encrypt(CryptoDTO cryptoDTO) throws Exception {
         Cipher cipher = Cipher.getInstance("AES");
         cipher.init(Cipher.ENCRYPT_MODE, key);
-        byte[] cypherText = cipher.doFinal(text.getBytes());
-        return Base64.getEncoder().encodeToString(cypherText);
+        byte[] cypherText = cipher.doFinal(cryptoDTO.text().getBytes());
+        return CryptoDTO.from(Base64.getEncoder().encodeToString(cypherText));
     }
 
-    public String decrypt(String encryptedText) throws Exception {
+    public CryptoDTO decrypt(CryptoDTO cryptoDTO) throws Exception {
         Cipher cipher = Cipher.getInstance("AES");
         cipher.init(Cipher.DECRYPT_MODE, key);
-        byte[] cryptoByte = Base64.getDecoder().decode(encryptedText.getBytes());
+        byte[] cryptoByte = Base64.getDecoder().decode(cryptoDTO.text().getBytes());
         byte[] byteText = cipher.doFinal(cryptoByte);
-        return new String(byteText);
+        return CryptoDTO.from(new String(byteText));
     }
 
-    public String hash(String text) throws Exception {
+    public CryptoDTO hash(CryptoDTO cryptoDTO) throws Exception {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        byte[] hashBytes = digest.digest(text.getBytes());
-        return java.util.HexFormat.of().formatHex(hashBytes);
+        byte[] hashBytes = digest.digest(cryptoDTO.text().getBytes());
+        return CryptoDTO.from(HexFormat.of().formatHex(hashBytes));
     }
 }

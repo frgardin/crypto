@@ -1,7 +1,9 @@
 package org.gardin.felipe.crypto;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -13,18 +15,18 @@ public class CryptoController {
         this.cryptoService = cryptoService;
     }
 
-    @GetMapping(ResourcePath.ENCRYPT_PATH)
-    public String encrypt(@RequestParam String text) throws Exception {
-        return cryptoService.encrypt(text);
+    @PostMapping(ResourcePath.ENCRYPT_PATH)
+    public HttpEntity<CryptoDTO> encrypt(@RequestBody CryptoDTO cryptoDTO) throws Exception {
+        return ResponseEntity.ok(cryptoService.encrypt(cryptoDTO));
     }
 
-    @GetMapping(ResourcePath.DECRYPT_PATH)
-    public String decrypt(@RequestParam String text) throws Exception {
-        return cryptoService.decrypt(text);
+    @PostMapping(ResourcePath.DECRYPT_PATH)
+    public HttpEntity<CryptoDTO> decrypt(@RequestBody CryptoDTO cryptoDTO) throws Exception {
+        return ResponseEntity.ok(cryptoService.decrypt(cryptoDTO));
     }
 
-    @GetMapping(ResourcePath.HASH_PATH)
-    public String hash(@RequestParam String text) throws Exception {
-        return cryptoService.hash(text);
+    @PostMapping(ResourcePath.HASH_PATH)
+    public HttpEntity<CryptoDTO> hash(@RequestBody CryptoDTO cryptoDTO) throws Exception {
+        return ResponseEntity.ok(cryptoService.hash(cryptoDTO));
     }
 }
