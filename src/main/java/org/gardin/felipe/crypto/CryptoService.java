@@ -12,6 +12,9 @@ import java.util.HexFormat;
 @Service
 public class CryptoService {
 
+    private static final String AES_TRANSFORMATION = "AES";
+    private static final String SHA_256_ALGORITHM = "SHA-256";
+
     private final SecretKey key;
 
     public CryptoService(SecretKey key) {
@@ -19,35 +22,37 @@ public class CryptoService {
     }
 
     public CryptoDTO encrypt(CryptoDTO cryptoDTO) throws Exception {
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, key);
-        byte[] cypherText = cipher.doFinal(cryptoDTO.text().getBytes());
-        return CryptoDTO.from(Base64.getEncoder().encodeToString(cypherText));
+        Cipher cipher = createCipher(Cipher.ENCRYPT_MODE);
+        byte[] cipherText = cipher.doFinal(cryptoDTO.text().getBytes());
+        return CryptoDTO.from(Base64Serializer.encodeBytes(cipherText));
     }
 
     public CryptoDTO decrypt(CryptoDTO cryptoDTO) throws Exception {
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.DECRYPT_MODE, key);
-        byte[] cryptoByte = Base64.getDecoder().decode(cryptoDTO.text().getBytes());
-        byte[] byteText = cipher.doFinal(cryptoByte);
-        return CryptoDTO.from(new String(byteText));
+        Cipher cipher = createCipher(Cipher.DECRYPT_MODE);
+        byte[] cryptoBytes = Base64Serializer.decodeBytes(cryptoDTO.text().getBytes());
+        byte[] decryptedBytes = cipher.doFinal(cryptoBytes);
+        return CryptoDTO.from(new String(decryptedBytes));
     }
 
     public CryptoDTO hash(CryptoDTO cryptoDTO) throws Exception {
-        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        MessageDigest digest = MessageDigest.getInstance(SHA_256_ALGORITHM);
         byte[] hashBytes = digest.digest(cryptoDTO.text().getBytes());
         return CryptoDTO.from(HexFormat.of().formatHex(hashBytes));
     }
 
     public byte[] encryptFile(MultipartFile file) throws Exception {
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, key);
+        Cipher cipher = createCipher(Cipher.ENCRYPT_MODE);
         return cipher.doFinal(file.getBytes());
     }
 
     public byte[] decryptFile(MultipartFile file) throws Exception {
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.DECRYPT_MODE, key);
+        Cipher cipher = createCipher(Cipher.DECRYPT_MODE);
         return cipher.doFinal(file.getBytes());
+    }
+
+    private Cipher createCipher(int mode) throws Exception {
+        Cipher cipher = Cipher.getInstance(AES_TRANSFORMATION);
+        cipher.init(mode, key);
+        return cipher;
     }
 }
