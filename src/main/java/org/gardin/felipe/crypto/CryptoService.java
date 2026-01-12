@@ -23,12 +23,12 @@ public class CryptoService {
     public CryptoDTO encrypt(CryptoDTO cryptoDTO) throws Exception {
         Cipher cipher = createCipher(Cipher.ENCRYPT_MODE);
         byte[] cipherText = cipher.doFinal(cryptoDTO.text().getBytes());
-        return CryptoDTO.from(Base64Serializer.encodeBytes(cipherText));
+        return CryptoDTO.from(Base64Encoder.encodeBytes(cipherText));
     }
 
     public CryptoDTO decrypt(CryptoDTO cryptoDTO) throws Exception {
         Cipher cipher = createCipher(Cipher.DECRYPT_MODE);
-        byte[] cryptoBytes = Base64Serializer.decodeBytes(cryptoDTO.text().getBytes());
+        byte[] cryptoBytes = Base64Encoder.decodeBytes(cryptoDTO.text().getBytes());
         byte[] decryptedBytes = cipher.doFinal(cryptoBytes);
         return CryptoDTO.from(new String(decryptedBytes));
     }

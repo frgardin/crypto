@@ -2,7 +2,7 @@ package org.gardin.felipe.crypto;
 
 import java.util.Base64;
 
-public final class Base64Serializer {
+public final class Base64Encoder {
 
     public static byte[] decodeBytes(byte[] bytes) {
         return Base64.getDecoder().decode(bytes);
@@ -12,7 +12,7 @@ public final class Base64Serializer {
         return Base64.getEncoder().encodeToString(bytes);
     }
 
-    private Base64Serializer() throws IllegalAccessException {
+    private Base64Encoder() throws IllegalAccessException {
         throw new IllegalAccessException();
     }
 }
