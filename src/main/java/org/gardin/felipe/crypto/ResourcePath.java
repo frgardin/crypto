@@ -11,7 +11,7 @@ public final class ResourcePath {
     public static final String ENCRYPT_PATH_FILE_PATH = ENCRYPT_PATH + FILE;
     public static final String HASH_PATH = API + "/hash";
 
-    public ResourcePath() throws IllegalAccessException {
+    private ResourcePath() throws IllegalAccessException {
         throw new IllegalAccessException();
     }
 }
