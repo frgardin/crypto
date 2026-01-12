@@ -37,4 +37,4 @@ out/
 .vscode/
 
 ### Secret Key ###
-!**/src/**/java/resources/static/secret.key
+/**/*secret.key
