@@ -6,9 +6,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.Matchers.matchesRegex;
+import static org.hamcrest.Matchers.not;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -21,8 +24,8 @@ public class CryptoControllerIntegrationTest {
     public void testEncrypt() throws Exception {
         mockMvc.perform(get("/api/encrypt").param("text", "Hello World"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(org.hamcrest.Matchers.not("Hello World")))
-                .andExpect(content().string(org.hamcrest.Matchers.matchesRegex("^[A-Za-z0-9+/]+={0,2}$")));
+                .andExpect(content().string(not("Hello World")))
+                .andExpect(content().string(matchesRegex("^[A-Za-z0-9+/]+={0,2}$")));
     }
 
     @Test
