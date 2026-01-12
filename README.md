@@ -93,6 +93,20 @@ curl -X POST "http://localhost:8080/api/hash" \
      -d '{"text": "Hello World"}'
 ```
 
+### Encrypt File
+```bash
+curl -X POST -F "file=@test.txt" \
+      "http://localhost:9090/api/encrypt-file" \
+      --output encrypted.bin
+```
+
+### Decrypt File
+```bash
+curl -X POST -F "file=@encrypted.bin" \
+      "http://localhost:9090/api/decrypt-file" \
+      --output decrypted.txt
+```
+
 ## Project Structure
 
 - `src/main/java/org/gardin/felipe/crypto/` - Main application code
