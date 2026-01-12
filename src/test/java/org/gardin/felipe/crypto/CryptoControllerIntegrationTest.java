@@ -7,7 +7,7 @@ import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -64,5 +64,37 @@ public class CryptoControllerIntegrationTest {
                         .content(json))
                 .andExpect(status().isOk())
                 .andExpect(content().json("{\"text\":\"a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e\"}"));
+    }
+
+    @Test
+    public void testEncryptFile() throws Exception {
+        byte[] fileContent = "Hello World File Content".getBytes();
+
+        mockMvc.perform(multipart("/api/encrypt-file")
+                        .file("file", fileContent)
+                        .contentType(MediaType.MULTIPART_FORM_DATA))
+                .andExpect(status().isOk())
+                .andExpect(header().exists("Content-Disposition"))
+                .andExpect(content().contentType(MediaType.APPLICATION_OCTET_STREAM));
+    }
+
+    @Test
+    public void testDecryptFile() throws Exception {
+        // First encrypt a file
+        byte[] originalContent = "Hello World File Content".getBytes();
+
+        byte[] encryptedContent = mockMvc.perform(multipart("/api/encrypt-file")
+                        .file("file", originalContent)
+                        .contentType(MediaType.MULTIPART_FORM_DATA))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsByteArray();
+
+        // Then decrypt it
+        mockMvc.perform(multipart("/api/decrypt-file")
+                        .file("file", encryptedContent)
+                        .contentType(MediaType.MULTIPART_FORM_DATA))
+                .andExpect(status().isOk())
+                .andExpect(header().exists("Content-Disposition"))
+                .andExpect(content().contentType(MediaType.APPLICATION_OCTET_STREAM));
     }
 }

@@ -1,6 +1,7 @@
 package org.gardin.felipe.crypto;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -36,5 +37,17 @@ public class CryptoService {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         byte[] hashBytes = digest.digest(cryptoDTO.text().getBytes());
         return CryptoDTO.from(HexFormat.of().formatHex(hashBytes));
+    }
+
+    public byte[] encryptFile(MultipartFile file) throws Exception {
+        Cipher cipher = Cipher.getInstance("AES");
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+        return cipher.doFinal(file.getBytes());
+    }
+
+    public byte[] decryptFile(MultipartFile file) throws Exception {
+        Cipher cipher = Cipher.getInstance("AES");
+        cipher.init(Cipher.DECRYPT_MODE, key);
+        return cipher.doFinal(file.getBytes());
     }
 }

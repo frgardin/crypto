@@ -36,6 +36,18 @@ A Spring Boot application that provides AES encryption and decryption services v
 - **Request Body**: `{"text": "your text here"}`
 - **Response**: `{"text": "sha256_hex_hash"}`
 
+### Encrypt File
+- **POST** `/api/encrypt-file`
+- Encrypts an uploaded file using AES
+- **Request**: Multipart form data with `file` parameter
+- **Response**: Encrypted file as binary attachment
+
+### Decrypt File
+- **POST** `/api/decrypt-file`
+- Decrypts an uploaded encrypted file using AES
+- **Request**: Multipart form data with `file` parameter
+- **Response**: Decrypted file as binary attachment
+
 ## Security Notes
 
 ⚠️ **Important**: The secret key is stored in `src/main/resources/static/secret.key` as a Base64 encoded string. This is for demonstration purposes only. In production, keys should never be stored in publicly accessible locations. Consider using environment variables, secure vaults, or configuration services instead.
