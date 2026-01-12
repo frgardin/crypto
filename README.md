@@ -118,3 +118,8 @@ curl -X POST -F "file=@encrypted.bin" \
 - `src/test/java/org/gardin/felipe/crypto/` - Test classes
 - `src/main/resources/` - Application resources
 - `src/main/resources/static/` - Static resources (contains secret key)
+- `frontend/` - Notion-inspired frontend interface
+  - `index.html` - Main web interface
+  - `style.css` - Modern styling
+  - `script.js` - API integration
+  - `README.md` - Frontend documentation

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Tool</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <div class="header-content">
+                <h1 class="title">🔐 Crypto Tool</h1>
+                <p class="subtitle">Secure encryption, decryption, and hashing</p>
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="container">
+                <!-- Text Operations -->
+                <div class="section">
+                    <h2 class="section-title">📝 Text Operations</h2>
+
+                    <div class="card">
+                        <h3 class="card-title">Encrypt Text</h3>
+                        <textarea id="encryptInput" class="textarea" placeholder="Enter text to encrypt..."></textarea>
+                        <button id="encryptBtn" class="btn btn-primary">Encrypt</button>
+                        <div id="encryptResult" class="result" style="display: none;"></div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="card-title">Decrypt Text</h3>
+                        <textarea id="decryptInput" class="textarea" placeholder="Enter encrypted text..."></textarea>
+                        <button id="decryptBtn" class="btn btn-primary">Decrypt</button>
+                        <div id="decryptResult" class="result" style="display: none;"></div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="card-title">Hash Text (SHA-256)</h3>
+                        <textarea id="hashInput" class="textarea" placeholder="Enter text to hash..."></textarea>
+                        <button id="hashBtn" class="btn btn-primary">Generate Hash</button>
+                        <div id="hashResult" class="result" style="display: none;"></div>
+                    </div>
+                </div>
+
+                <!-- File Operations -->
+                <div class="section">
+                    <h2 class="section-title">📁 File Operations</h2>
+
+                    <div class="card">
+                        <h3 class="card-title">Encrypt File</h3>
+                        <div class="file-input-container">
+                            <input type="file" id="encryptFileInput" class="file-input" accept="*/*">
+                            <label for="encryptFileInput" class="file-label">Choose file to encrypt</label>
+                            <span id="encryptFileName" class="file-name"></span>
+                        </div>
+                        <button id="encryptFileBtn" class="btn btn-secondary">Encrypt File</button>
+                        <div id="encryptFileResult" class="result" style="display: none;"></div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="card-title">Decrypt File</h3>
+                        <div class="file-input-container">
+                            <input type="file" id="decryptFileInput" class="file-input" accept="*/*">
+                            <label for="decryptFileInput" class="file-label">Choose file to decrypt</label>
+                            <span id="decryptFileName" class="file-name"></span>
+                        </div>
+                        <button id="decryptFileBtn" class="btn btn-secondary">Decrypt File</button>
+                        <div id="decryptFileResult" class="result" style="display: none;"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
