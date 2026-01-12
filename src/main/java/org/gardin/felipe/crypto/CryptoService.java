@@ -6,7 +6,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import java.security.MessageDigest;
-import java.util.Base64;
 import java.util.HexFormat;
 
 @Service
