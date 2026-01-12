@@ -6,6 +6,7 @@ public final class ResourcePath {
 
     public static final String DECRYPT_PATH = API + "/decrypt";
     public static final String ENCRYPT_PATH = API + "/encrypt";
+    public static final String HASH_PATH = API + "/hash";
 
     public ResourcePath() throws IllegalAccessException {
         throw new IllegalAccessException();

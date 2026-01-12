@@ -22,4 +22,9 @@ public class CryptoController {
     public String decrypt(@RequestParam String text) throws Exception {
         return cryptoService.decrypt(text);
     }
+
+    @GetMapping(ResourcePath.HASH_PATH)
+    public String hash(@RequestParam String text) throws Exception {
+        return cryptoService.hash(text);
+    }
 }

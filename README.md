@@ -23,8 +23,12 @@ A Spring Boot application that provides AES encryption and decryption services v
 - Encrypts the provided text using AES and returns Base64 encoded result
 
 ### Decrypt
-- **GET** `/decrypt?text={encryptedText}`
+- **GET** `/api/decrypt?text={encryptedText}`
 - Decrypts the provided Base64 encoded encrypted text
+
+### Hash
+- **GET** `/api/hash?text={text}`
+- Computes SHA-256 hash of the provided text and returns hexadecimal string
 
 ## Security Notes
 
@@ -57,7 +61,12 @@ curl "http://localhost:8080/api/encrypt?text=Hello%20World"
 
 ### Decrypt text
 ```bash
-curl "http://localhost:8080/decrypt?text=<encrypted_text>"
+curl "http://localhost:8080/api/decrypt?text=<encrypted_text>"
+```
+
+### Hash text
+```bash
+curl "http://localhost:8080/api/hash?text=Hello%20World"
 ```
 
 ## Project Structure

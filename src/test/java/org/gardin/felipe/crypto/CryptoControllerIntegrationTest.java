@@ -40,4 +40,11 @@ public class CryptoControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("Hello World"));
     }
+
+    @Test
+    public void testHash() throws Exception {
+        mockMvc.perform(get("/api/hash").param("text", "Hello World"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e"));
+    }
 }

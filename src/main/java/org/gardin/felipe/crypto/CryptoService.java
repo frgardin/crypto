@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
+import java.security.MessageDigest;
 import java.util.Base64;
 
 @Service
@@ -28,5 +29,11 @@ public class CryptoService {
         byte[] cryptoByte = Base64.getDecoder().decode(encryptedText.getBytes());
         byte[] byteText = cipher.doFinal(cryptoByte);
         return new String(byteText);
+    }
+
+    public String hash(String text) throws Exception {
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] hashBytes = digest.digest(text.getBytes());
+        return java.util.HexFormat.of().formatHex(hashBytes);
     }
 }
