@@ -34,7 +34,7 @@ public class CryptoController {
         return ResponseEntity.ok(cryptoService.hash(cryptoDTO));
     }
 
-    @PostMapping("/api/encrypt-file")
+    @PostMapping(ResourcePath.ENCRYPT_PATH_FILE_PATH)
     public ResponseEntity<byte[]> encryptFile(@RequestParam("file") MultipartFile file) throws Exception {
         byte[] encryptedData = cryptoService.encryptFile(file);
         return ResponseEntity.ok()
@@ -43,7 +43,7 @@ public class CryptoController {
                 .body(encryptedData);
     }
 
-    @PostMapping("/api/decrypt-file")
+    @PostMapping(ResourcePath.DECRYPT_FILE_PATH)
     public ResponseEntity<byte[]> decryptFile(@RequestParam("file") MultipartFile file) throws Exception {
         byte[] decryptedData = cryptoService.decryptFile(file);
         return ResponseEntity.ok()
